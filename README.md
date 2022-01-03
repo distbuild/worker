@@ -1,7 +1,7 @@
 # worker
 
 [![Build Status](https://github.com/distbuild/worker/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/distbuild/worker/actions?query=workflow%3ACI)
-[![codecov](https://codecov.io/gh/distbuild/worker/branch/main/graph/badge.svg?token=TH43EUERSY)](https://codecov.io/gh/distbuild/worker)
+[![codecov](https://codecov.io/gh/distbuild/worker/branch/main/graph/badge.svg?token=U2RWRDSJGK)](https://codecov.io/gh/distbuild/worker)
 [![Go Report Card](https://goreportcard.com/badge/github.com/distbuild/worker)](https://goreportcard.com/report/github.com/distbuild/worker)
 [![License](https://img.shields.io/github/license/distbuild/worker.svg)](https://github.com/distbuild/worker/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/release/distbuild/worker.svg)](https://github.com/distbuild/worker/releases/latest)
