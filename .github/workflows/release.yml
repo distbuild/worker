@@ -13,6 +13,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.DISTBUILD_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Install Go
         uses: actions/setup-go@v2
         with:
