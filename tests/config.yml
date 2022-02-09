@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: worker
-metadata:
-  name: worker
-spec:

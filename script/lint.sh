@@ -1,9 +1,15 @@
 #!/bin/bash
 
-go env -w GOPROXY=https://goproxy.cn,direct
+build=$(date +%FT%T%z)
 
-gofmt -s -w .
-golangci-lint run
+# rustup update --no-self-update stable
+# rustup component add rustfmt
+cargo fmt --all
 
-go mod tidy
-go mod verify
+# rustup update --no-self-update stable
+# rustup component add clippy
+build=$build cargo clippy --all-features --all-targets -- -A clippy::all
+
+# rustup update --no-self-update stable
+# cargo install cargo-hack --debug
+#build=$build cargo hack check --all-features --all-targets

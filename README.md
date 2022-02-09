@@ -1,23 +1,22 @@
 # worker
 
 [![Build Status](https://github.com/distbuild/worker/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/distbuild/worker/actions?query=workflow%3ACI)
-[![codecov](https://codecov.io/gh/distbuild/worker/branch/main/graph/badge.svg?token=U2RWRDSJGK)](https://codecov.io/gh/distbuild/worker)
-[![Go Report Card](https://goreportcard.com/badge/github.com/distbuild/worker)](https://goreportcard.com/report/github.com/distbuild/worker)
+[![codecov](https://codecov.io/gh/distbuild/worker/branch/main/graph/badge.svg?token=FM4NOMPT7Q)](https://codecov.io/gh/distbuild/worker)
 [![License](https://img.shields.io/github/license/distbuild/worker.svg)](https://github.com/distbuild/worker/blob/main/LICENSE)
-[![Release](https://img.shields.io/github/release/distbuild/worker.svg)](https://github.com/distbuild/worker/releases/latest)
+[![Tag](https://img.shields.io/github/tag/distbuild/worker.svg)](https://github.com/distbuild/worker/tags)
 [![Gitter chat](https://badges.gitter.im/craftslab/distbuild.png)](https://gitter.im/craftslab/distbuild)
 
 
 
 ## Introduction
 
-*worker* is the worker of [distbuild](https://github.com/distbuild) written in Go.
+*worker* is the build worker of [distbuild](https://github.com/distbuild) written in Rust.
 
 
 
 ## Prerequisites
 
-- Go >= 1.17.0
+- Rust >= 1.57.0
 
 
 
@@ -27,8 +26,8 @@
 git clone https://github.com/distbuild/worker.git
 
 cd worker
-version=latest make build
-./bin/worker --config-file="$PWD/config/config.yml"
+make build
+./target/release/worker --config-file="$PWD/src/config/config.yml"
 ```
 
 
@@ -39,8 +38,8 @@ version=latest make build
 git clone https://github.com/distbuild/worker.git
 
 cd worker
-version=latest make docker
-docker run -v "$PWD"/config:/tmp ghcr.io/distbuild/worker:latest --config-file="/tmp/config.yml"
+make docker
+docker run -v "$PWD"/src/config:/tmp ghcr.io/distbuild/worker:latest --config-file="/tmp/config.yml"
 ```
 
 
@@ -48,24 +47,22 @@ docker run -v "$PWD"/config:/tmp ghcr.io/distbuild/worker:latest --config-file="
 ## Usage
 
 ```
-usage: worker --config-file=CONFIG-FILE [<flags>]
+USAGE:
+    worker --config-file <NAME>
 
-distbuild worker
-
-Flags:
-  --help                     Show context-sensitive help (also try --help-long
-                             and --help-man).
-  --version                  Show application version.
-  --config-file=CONFIG-FILE  Config file (.yml)
+OPTIONS:
+    -c, --config-file <NAME>    Config file (.yml)
+    -h, --help                  Print help information
+    -V, --version               Print version information
 ```
 
 
 
 ## Settings
 
-*worker* parameters can be set in the directory [config](https://github.com/distbuild/worker/blob/main/config).
+*worker* parameters can be set in the directory [config](https://github.com/distbuild/worker/blob/main/src/config).
 
-An example of configuration in [config.yml](https://github.com/distbuild/worker/blob/main/config/config.yml):
+An example of configuration in [config.yml](https://github.com/distbuild/worker/blob/main/src/config/config.yml):
 
 ```yaml
 apiVersion: v1
@@ -73,6 +70,7 @@ kind: worker
 metadata:
   name: worker
 spec:
+  foo: foo
 ```
 
 

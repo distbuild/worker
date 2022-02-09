@@ -1,15 +1,20 @@
 #!/bin/bash
 
 build=$(date +%FT%T%z)
-version="$1"
 
-ldflags="-s -w -X github.com/distbuild/worker/config.Build=$build -X github.com/distbuild/worker/config.Version=$version"
-target="worker"
+linux="target/x86_64-unknown-linux-gnu/release/worker"
+windows="target/x86_64-pc-windows-gnu/release/worker.exe"
 
-go env -w GOPROXY=https://goproxy.cn,direct
+if [ "$1" = "all" ]; then
+  build=$build cargo build --release --all-features --all-targets --target x86_64-pc-windows-gnu
+  build=$build cargo build --release --all-features --all-targets --target x86_64-unknown-linux-gnu
+elif [ "$1" = "offline" ]; then
+  build=$build cargo build --release --all-features --all-targets --offline
+elif [ "$1" = "check" ]; then
+  build=$build cargo check --release --all-features --all-targets
+else
+  build=$build cargo build --release --all-features --all-targets
+fi
 
-CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -ldflags "$ldflags" -o bin/$target main.go
-CGO_ENABLED=0 GOARCH=amd64 GOOS=windows go build -ldflags "$ldflags" -o bin/$target.exe main.go
-
-upx bin/$target
-upx bin/$target.exe
+if [ -f $linux ]; then upx $linux; fi
+if [ -f $windows ]; then upx $windows; fi

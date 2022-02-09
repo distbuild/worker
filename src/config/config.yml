@@ -3,3 +3,4 @@ kind: worker
 metadata:
   name: worker
 spec:
+  foo: foo

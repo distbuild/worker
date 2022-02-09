@@ -1,14 +1,6 @@
 #!/bin/bash
 
-go env -w GOPROXY=https://goproxy.cn,direct
+build=$(date +%FT%T%z)
 
-if [ "$1" = "report" ]; then
-  go test -cover -covermode=atomic -coverprofile=coverage.txt -parallel 2 -race -v ./...
-else
-  list="$(go list ./... | grep -v foo)"
-  old=$IFS IFS=$'\n'
-  for item in $list; do
-    go test -cover -covermode=atomic -parallel 2 -race -v "$item"
-  done
-  IFS=$old
-fi
+# rustup update --no-self-update stable
+build=$build cargo test --all-features --all-targets -- --nocapture

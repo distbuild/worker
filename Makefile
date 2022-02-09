@@ -1,41 +1,42 @@
-# Config
-
-VERSION=$(version)
-
-
 # Build
 
 .PHONY: FORCE
 
-build: go-build
+build: rs-build
 .PHONY: build
 
-clean: go-clean
+clean: rs-clean
 .PHONY: clean
 
-docker: go-docker
+docker: rs-docker
 .PHONY: docker
 
-lint: go-lint
+install: rs-install
+.PHONY: install
+
+lint: rs-lint
 .PHONY: lint
 
-test: go-test
+test: rs-test
 .PHONY: test
 
 
 # Non-PHONY targets (real files)
 
-go-build: FORCE
-	./script/build.sh $(VERSION)
+rs-build: FORCE
+	./script/build.sh
 
-go-clean: FORCE
+rs-clean: FORCE
 	./script/clean.sh
 
-go-docker: FORCE
-	./script/docker.sh $(VERSION)
+rs-docker: FORCE
+	./script/docker.sh
 
-go-lint: FORCE
+rs-install: FORCE
+	./script/install.sh
+
+rs-lint: FORCE
 	./script/lint.sh
 
-go-test: FORCE
-	./script/test.sh report
+rs-test: FORCE
+	./script/test.sh
