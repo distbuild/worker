@@ -24,5 +24,5 @@ rustup toolchain install stable-x86_64-pc-windows-gnu
 
 # Install for Linux
 # rustc --print target-list
-rustup target add x86_64-unknown-linux-gnu
-rustup toolchain install stable-x86_64-unknown-linux-gnu
+rustup target add x86_64-unknown-linux-musl
+rustup toolchain install stable-x86_64-unknown-linux-musl
