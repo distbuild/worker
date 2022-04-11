@@ -4,7 +4,6 @@ COPY . .
 RUN make install && \
     make build
 
-FROM gcr.io/distroless/base-debian11
+FROM scratch
 COPY --from=builder /usr/src/worker/target/release/worker /usr/local/bin/worker
-USER nonroot:nonroot
 ENTRYPOINT ["worker"]
