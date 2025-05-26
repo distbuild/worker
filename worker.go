@@ -56,10 +56,14 @@ type server struct {
 func init() {
 	cobra.OnInitialize()
 
-	rootCmd.PersistentFlags().StringVarP(&listenAddress, "listen-address", "l", ":39090", "listen address")
-	rootCmd.PersistentFlags().StringVarP(&workSpacePath, "workspace-path", "w", "", "workspace path")
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		homeDir = "."
+	}
+	defaultWorkspace := filepath.Join(homeDir, ".distbuild/workspace")
 
-	_ = rootCmd.MarkFlagRequired("workspace-path")
+	rootCmd.PersistentFlags().StringVarP(&listenAddress, "listen-address", "l", ":39090", "listen address")
+	rootCmd.PersistentFlags().StringVarP(&workSpacePath, "workspace-path", "w", defaultWorkspace, "workspace path")
 
 	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
 }
@@ -75,13 +79,13 @@ func validArgs(_ context.Context) error {
 		return errors.New("invalid listen address\n")
 	}
 
-	if workSpacePath == "" {
-		return errors.New("workspace path is required\n")
-	}
-
 	if _, err := os.Stat(workSpacePath); err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
-			return errors.New("workspace path does not exist\n")
+			if err := os.MkdirAll(workSpacePath, os.ModePerm); err != nil {
+				return errors.New("failed to create workspace path!")
+			}
+		} else {
+			return errors.New("failed to access workspace path!")
 		}
 	}
 
