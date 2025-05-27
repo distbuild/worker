@@ -17,13 +17,14 @@ RUN git clone https://github.com/craftslab/gitclone.git --depth=1 && \
 
 USER aosp
 WORKDIR /home/aosp
-RUN mkdir worker
-COPY . worker/
-RUN pushd worker && \
+RUN mkdir build
+COPY . build/
+RUN pushd build && \
+    sudo chown -R aosp:aosp * && \
     make build && \
     cp bin/worker /home/aosp/.distbuild/bin/ && \
     popd && \
-    rm -rf worker
+    rm -rf build
 
 ENV PATH=/home/aosp/.distbuild/bin:$PATH
 CMD ["worker", "--listen-address=:39090", "--workspace-path=/home/aosp/.distbuild/workspace"]
