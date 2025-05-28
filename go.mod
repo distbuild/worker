@@ -23,4 +23,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace distbuild/boong/utils => github.com/distbuild/utils v1.1.0
+replace distbuild/boong/utils => github.com/distbuild/utils v1.2.0
