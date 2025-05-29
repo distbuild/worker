@@ -2,7 +2,8 @@ FROM craftslab/ubuntu:22.04-aosp
 
 USER aosp
 WORKDIR /home/aosp
-RUN mkdir -p .distbuild/bin && \
+RUN mkdir -p .distbuild/boong/bin && \
+    mkdir -p .distbuild/prebuilts && \
     mkdir -p .distbuild/workspace
 
 USER aosp
@@ -10,10 +11,10 @@ WORKDIR /home/aosp
 RUN git clone https://github.com/craftslab/gitclone.git --depth=1 && \
     pushd gitclone && \
     make build && \
-    cp bin/clone /home/aosp/.distbuild/bin/ && \
-    cp config.yml /home/aosp/.distbuild/bin/clone-config.yml && \
+    cp bin/clone /home/aosp/.distbuild/boong/bin/ && \
+    cp config.yml /home/aosp/.distbuild/boong/bin/clone-config.yml && \
     popd && \
-    rm -rf gitclone
+    sudo rm -rf gitclone
 
 USER aosp
 WORKDIR /home/aosp
@@ -22,9 +23,9 @@ COPY . build/
 RUN pushd build && \
     sudo chown -R aosp:aosp * && \
     make build && \
-    cp bin/worker /home/aosp/.distbuild/bin/ && \
+    cp bin/worker /home/aosp/.distbuild/boong/bin/ && \
     popd && \
-    rm -rf build
+    sudo rm -rf build
 
-ENV PATH=/home/aosp/.distbuild/bin:$PATH
+ENV PATH=/home/aosp/.distbuild/boong/bin:$PATH
 CMD ["worker", "--listen-address=:39090", "--workspace-path=/home/aosp/.distbuild/workspace"]
