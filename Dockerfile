@@ -29,5 +29,5 @@ RUN pushd build && \
     sudo rm -rf build
 
 ENV PATH=/home/aosp/.distbuild/boong/bin:$PATH
-ENV PATH=/home/aosp/.distbuild/prebuilts/clang/host/linux-x86/clang-3289846/bin:$PATH
+ENV PATH=/home/aosp/.distbuild/prebuilts/clang/host/linux-x86/clang-r547379/bin:$PATH
 CMD ["worker", "--listen-address=:39090", "--workspace-path=/home/aosp/.distbuild/workspace"]
