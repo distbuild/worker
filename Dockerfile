@@ -9,13 +9,12 @@ RUN mkdir -p .distbuild/boong/bin && \
 
 USER aosp
 WORKDIR /home/aosp
-RUN git clone https://github.com/craftslab/gitclone.git --depth=1 && \
-    pushd gitclone && \
+RUN git clone https://github.com/repo-scm/git.git --depth=1 && \
+    pushd git && \
     make build && \
-    cp bin/clone /home/aosp/.distbuild/boong/bin/ && \
-    cp config.yml /home/aosp/.distbuild/boong/bin/clone-config.yml && \
+    cp bin/git /home/aosp/.distbuild/boong/bin/git-cow && \
     popd && \
-    sudo rm -rf gitclone
+    sudo rm -rf git
 
 USER aosp
 WORKDIR /home/aosp
